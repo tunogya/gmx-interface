@@ -62,6 +62,7 @@ const enabledFeatures = [
 export const defaultChartProps = {
   theme: "Dark",
   locale: "en",
+  timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC",
   library_path: "/charting_library/",
   clientId: "tradingview.com",
   userId: "public_user_id",

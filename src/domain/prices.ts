@@ -25,12 +25,10 @@ const FEED_ID_MAP = {
   YFI_USD: "0x8a4d74003870064d41d4f84940550911fbfccf04",
   SPELL_USD: "0x8640b23468815902e011948f3ab173e1e83f9879",
 };
-export const timezoneOffset = -new Date().getTimezoneOffset() * 60;
-
 function formatBarInfo(bar) {
   const { t, o: open, c: close, h: high, l: low } = bar;
   return {
-    time: t + timezoneOffset,
+    time: t,
     open,
     close,
     high,
@@ -162,7 +160,7 @@ function getCandlesFromPrices(prices, period) {
     const [ts, price] = prices[i];
     const tsGroup = Math.floor(ts / periodTime) * periodTime;
     if (prevTsGroup !== tsGroup) {
-      candles.push({ t: prevTsGroup + timezoneOffset, o, h, l, c });
+      candles.push({ t: prevTsGroup, o, h, l, c });
       o = c;
       h = Math.max(o, c);
       l = Math.min(o, c);
@@ -283,7 +281,7 @@ export function useChartPrices(chainId, symbol, isStable, period, currentAverage
 
 function appendCurrentAveragePrice(prices, currentAveragePrice, period) {
   const periodSeconds = CHART_PERIODS[period];
-  const currentCandleTime = Math.floor(Date.now() / 1000 / periodSeconds) * periodSeconds + timezoneOffset;
+  const currentCandleTime = Math.floor(Date.now() / 1000 / periodSeconds) * periodSeconds;
   const last = prices[prices.length - 1];
   const averagePriceValue = parseFloat(formatAmount(currentAveragePrice, USD_DECIMALS, 2));
   if (currentCandleTime === last.time) {

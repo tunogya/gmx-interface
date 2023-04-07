@@ -1,6 +1,6 @@
 import { getServerUrl } from "config/backend";
 import { getTokenBySymbol, getWrappedToken } from "config/tokens";
-import { getChainlinkChartPricesFromGraph, getChartPricesFromStats, timezoneOffset } from "domain/prices";
+import { getChainlinkChartPricesFromGraph, getChartPricesFromStats } from "domain/prices";
 import { CHART_PERIODS } from "lib/legacy";
 
 function getCurrentBarTimestamp(periodSeconds) {
@@ -47,7 +47,7 @@ export async function getCurrentPriceOfToken(chainId: number, symbol: string) {
 export function fillBarGaps(prices, periodSeconds) {
   if (prices.length < 2) return prices;
 
-  const currentBarTimestamp = getCurrentBarTimestamp(periodSeconds) / 1000 + timezoneOffset;
+  const currentBarTimestamp = getCurrentBarTimestamp(periodSeconds) / 1000;
   let lastBar = prices[prices.length - 1];
 
   if (lastBar.time !== currentBarTimestamp) {

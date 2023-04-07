@@ -125,6 +125,7 @@ export default function TVChartContainer({
       symbol: symbolRef.current, // Using ref to avoid unnecessary re-renders on symbol change and still have access to the latest symbol
       datafeed: datafeed,
       theme: defaultChartProps.theme,
+      timezone: defaultChartProps.timezone,
       container: chartContainerRef.current,
       library_path: defaultChartProps.library_path,
       locale: defaultChartProps.locale,

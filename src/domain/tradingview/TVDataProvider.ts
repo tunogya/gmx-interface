@@ -1,5 +1,5 @@
 import { LAST_BAR_REFRESH_INTERVAL, SUPPORTED_RESOLUTIONS } from "config/tradingview";
-import { getLimitChartPricesFromStats, timezoneOffset } from "domain/prices";
+import { getLimitChartPricesFromStats } from "domain/prices";
 import { CHART_PERIODS, USD_DECIMALS } from "lib/legacy";
 import { formatAmount } from "lib/numbers";
 import { Bar } from "./types";
@@ -73,9 +73,7 @@ export class TVDataProvider {
     }
 
     const { from, to, countBack } = periodParams;
-    const toWithOffset = to + timezoneOffset;
-    const fromWithOffset = from + timezoneOffset;
-    const bars = barsInfo.data.filter((bar) => bar.time > fromWithOffset && bar.time <= toWithOffset);
+    const bars = barsInfo.data.filter((bar) => bar.time > from && bar.time <= to);
 
     // if no bars returned, return empty array
     if (!bars.length) {
